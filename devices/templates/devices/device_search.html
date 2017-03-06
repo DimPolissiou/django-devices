@@ -1,0 +1,95 @@
+{% extends "devices/base.html" %}
+{% load static %}
+{% load crispy_forms_tags %}
+
+{% block title %}
+  {% with page_title="Search devices" %}
+    {{ block.super }}
+  {% endwith %}
+{% endblock title %}
+
+{% block extrahead %}
+<script>
+function toggle(source) {
+  checkboxes = document.getElementsByName('action-select');
+  for(var i=0, n=checkboxes.length; i<n; i++) {
+    checkboxes[i].checked = source.checked;
+  }
+}
+</script>
+{% endblock extrahead %}
+
+{% load crispy_forms_tags %}
+
+{% block content %}
+<div class="row">
+<form action="#" method="GET" id="form_page" onsubmit="return check_change()">
+{% include "search_listview/pagination.html" %}
+<div class="col-sm-2"> </div>
+<ul class="col-sm-8 collapse" id="search_box">
+<div class="well bs-component">
+    <div class="row">
+    {% for form in search_box_form %}
+    <div class="col-md-12">
+        {{ form|crispy }}
+    </div>
+    {% endfor %}
+    </div>
+    <button type="submit" class="btn btn-primary">Search</button>
+</div>
+</ul>
+</form>
+</div>
+
+<div class="row">
+    <table class="table">
+        <thead>
+	    <th><input type="checkbox" onClick="toggle(this)" /> Toggle All</th>
+            <th>Manufacturer</th>
+            <th>Model</th>
+            <th>Configuration Name</th>
+            <th>Activation Date</th>
+            <th>City</th>
+            <th>Street</th>
+        </thead>
+        <tbody>
+            {% for object in object_list %}
+            <tr>
+                <td>
+                    <input class="action-select" name="action-select" value="{{ object.id }}" type="checkbox" form="id_action_posts"/>
+                </td>
+                <td>
+                    {{ object.manufacturer }}
+                </td>
+                <td>
+                    {{ object.model_name }}
+                </td>
+                <td>
+                    {{ object.config }}
+                </td>
+                <td>
+                    {{ object.activation_date }}
+                </td>
+                <td>
+                    {{ object.city }}
+                </td>
+                <td>
+                    {{ object.street }}
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+  </table>
+</div>
+
+<form action="" method="post" id="id_action_posts" class="form-inline">{% csrf_token %}
+{% include 'actions_select.html' %}
+
+{% endblock content %}
+
+{% block footer %}
+<script src="{% static 'js/search_listview.js' %}"></script>
+<script>
+    start_search()
+</script> 
+{% endblock footer %}

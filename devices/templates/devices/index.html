@@ -1,0 +1,48 @@
+{% extends "devices/base.html" %}
+{% load leaflet_tags %}
+
+
+{% block title %}
+  {% with title="Devices" %}
+    {{ block.super }}
+  {% endwith %}
+{% endblock title %}
+
+{% block extrahead %}
+  {% leaflet_js plugins="forms" %}
+  {% leaflet_css plugins="forms" %}
+{% endblock extrahead %}
+
+{% block javascript %}
+   <script type="text/javascript">
+      var dataurl = '{% url "data" user.pk %}';
+      //var dataurl = '/data/{z}/{x}/{y}.json';
+        window.addEventListener("map:init", function (event) {
+        var map = event.detail.map;
+        // Download GeoJSON data with Ajax
+        fetch(dataurl)
+          .then(function(resp) {
+            return resp.json();
+          })
+          .then(function(data) {
+            L.geoJson(data, {
+              onEachFeature: function onEachFeature(feature, layer) {
+                var props = feature.properties;
+                var content = `<h3>${props.model_name}</h3><p>${props.notes}</p><p><p><a href="/devices/device/${props.id}/cpu">Health Dashboard</a></p><a href="/devices/device/${props.id}/update">Edit device</a></p><p><a href="/admin/django_netjsonconfig/config/${props.config}/change/">Device Configuration</a></p>`;
+                layer.bindPopup(content);
+            }}).addTo(map);
+          });
+      });
+    </script>
+{% endblock %}
+
+{% block extrastyle %}
+    <style>
+      .leaflet-container { height: 600px; }
+    </style>
+{% endblock extrastyle %}
+
+{% block content %}
+    <h1>Device Locations</h1>
+    {% leaflet_map "main" %}
+{% endblock content %}

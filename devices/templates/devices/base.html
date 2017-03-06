@@ -1,0 +1,102 @@
+{% load static %}
+{% load bootstrap_themes %}
+{% load i18n static %}
+{% get_current_language as LANGUAGE_CODE %}{% get_current_language_bidi as LANGUAGE_BIDI %}
+
+<!DOCTYPE html>
+<html lang="{{ LANGUAGE_CODE|default:"en-us" }}" {% if LANGUAGE_BIDI %}dir="rtl"{% endif %}>
+	<head>
+		<meta charset="utf-8">
+       		    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+       		        <title>{% block title %}{% if page_title %}{{ page_title }} |  {% endif %}OpenWISP Monitor{% endblock %}</title>
+       		        <!-- Core CSS - Include with every page -->
+       		        {% bootstrap_styles theme='flatly' type='min.css' %}
+			<link rel="stylesheet" type="text/css" href="{% block stylesheet %}{% static "devices/css/base.css" %}{% endblock %}" />
+       		        {% block extrastyle %}{% endblock %}
+       		        {% if LANGUAGE_BIDI %}<link rel="stylesheet" type="text/css" href="{% block stylesheet_rtl %}{% static "admin/css/rtl.css" %}{% endblock %}" />{% endif %}
+       		        {% block extrahead %}{% endblock %}
+                </head>
+                <body class="{% if is_popup %}popup {% endif %}{% block bodyclass %}{% endblock %}" data-admin-utc-offset="{% now "Z" %}">
+
+		<!-- Container -->
+		<div id="container">
+
+
+                    {% block messages %}
+                        {% if messages %}
+                        <ul class="messagelist">{% for message in messages %}
+                          <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message|capfirst }}</li>
+                        {% endfor %}</ul>
+                        {% endif %}
+                    {% endblock messages %}
+
+                    {% block nav-global %}
+                    <nav class="navbar navbar-default">
+                        <div class="container-fluid">
+                            <div class="navbar-header">
+                                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                                    <span class="sr-only">Toggle navigation</span>
+                                    <span class="icon-bar"></span>
+                                    <span class="icon-bar"></span>
+                                    <span class="icon-bar"></span>
+                                </button>
+                                <a class="navbar-brand" href="#">OpenWISP Monitor</a>
+                            </div>
+                            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                                {% if user.is_authenticated %}
+                                <ul class="nav navbar-nav navbar-right">
+                                    <li class="dropdown">
+                                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><strong>{{ user.username }}</strong>
+                                            <span class="caret"></span>
+                                        </a>
+                                        <ul class="dropdown-menu" role="menu">
+                                            <li>
+                                                <a href="{% url "devices_home" %}">Devices</a>
+                                            </li>
+                                            <li>
+                                                <a href="{% url "device_register" %}">Register a new device</a>
+                                            </li>
+                                            <li>
+                                                <a href="{% url "device_search" %}">Search devices</a>
+                                            </li>
+                                            <li class="divider"></li>
+                                            <li>
+                                                <a href="/admin/django_netjsonconfig/template/add/">Create new template</a>
+                                            </li>
+                                            <li>
+                                                <a href="#">Merge templates</a>
+                                            </li>
+                                            <li class="divider"></li>
+                                            <li>
+                                                <a href="/logout">Logout</a>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                </ul>
+                            </div>
+                            {% endif %}
+                        </div>
+                    </nav>
+                    {% endblock nav-global %}
+
+    <!-- Content -->
+    	<div id="content" class="{% block coltype %}colM{% endblock %}">
+                {% block content %}
+                {% endblock %}
+		{% block sidebar %}{% endblock %}
+        <br class="clear" />
+    </div>
+    <!-- END Content -->
+
+                    <!-- Core Scripts - Include with every page -->
+                    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+                    {% bootstrap_script use_min=True %}
+                    
+
+        {% block javascript %}
+        {% endblock %}
+
+	<div id="footer">{% block footer %}{% endblock %}</div>
+		</div>
+            </body>
+        </html>

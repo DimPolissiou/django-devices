@@ -1,0 +1,33 @@
+{% extends "devices/base.html" %}
+{% load static %}
+{% load leaflet_tags %}
+
+
+{% block title %}
+  {% with title="Device graphs" %}
+    {{ block.super }}
+  {% endwith %}
+{% endblock title %}
+
+{% block extrahead %}
+  {% leaflet_js plugins="forms" %}
+  {% leaflet_css plugins="forms" %}
+{% endblock extrahead %}
+
+{% block javascript %}
+    <script type="text/javascript" src="{% static "devices/js/graphs.js" %}"></script>
+{% endblock %}
+
+{% block extrastyle %}
+{% endblock extrastyle %}
+
+{% block content %}
+<ul class="nav nav-pills">
+  <li{% if group.title == "cpu" %} class="active"{% endif %}><a href="{% url 'device_graphs' device_id=device.id graph_type="cpu"%}">CPU</a></li>
+  <li{% if group.title == "memory" %} class="active"{% endif %}><a href="{% url 'device_graphs' device_id=device.id graph_type="memory"%}">Memory</a></li>
+  <li{% if group.title == "interface" %} class="active"{% endif %}><a href="{% url 'device_graphs' device_id=device.id graph_type="interface"%}">Network interfaces</a></li>
+  <li{% if group.title == "load" %} class="active"{% endif %}><a href="{% url 'device_graphs' device_id=device.id graph_type="load"%}">System load</a></li>
+</ul>
+
+<div class="django-collectd-rest-group" id="{{group.name}}" ></div>
+{% endblock content %}

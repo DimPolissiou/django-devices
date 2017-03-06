@@ -1,0 +1,64 @@
+{% extends "devices/base.html" %}
+{% load static %}
+{% load crispy_forms_tags %}
+
+{% block title %}
+  {% with page_title="Select Templates" %}
+    {{ block.super }}
+  {% endwith %}
+{% endblock title %}
+
+{% block extrahead %}
+<script>
+function toggle(source) {
+  checkboxes = document.getElementsByName('action-select');
+  for(var i=0, n=checkboxes.length; i<n; i++) {
+    checkboxes[i].checked = source.checked;
+  }
+}
+</script>
+{% endblock extrahead %}
+
+{% load crispy_forms_tags %}
+
+{% block content %}
+<div class="row">
+    <table class="table">
+        <thead>
+	    <th><input type="checkbox" onClick="toggle(this)" /> Toggle All</th>
+            <th>Template name</th>
+            <th>Type</th>
+            <th>Backend</th>
+            <th>Created</th>
+            <th>Modified</th>
+        </thead>
+        <tbody>
+            {% for object in object_list %}
+            <tr>
+                <td>
+                    <input class="action-select" name="action-select" value="{{ object.id }}" type="checkbox" form="id_action_posts"/>
+                </td>
+                <td>
+                    {{ object.name }}
+                </td>
+                <td>
+                    {{ object.type }}
+                </td>
+                <td>
+                    {{ object.backend }}
+                </td>
+                <td>
+                    {{ object.created }}
+                </td>
+                <td>
+                    {{ object.modified }}
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+</table>
+
+<form action="" method="post" id="id_action_posts" class="form-inline">{% csrf_token %}
+{% include 'actions_select.html' %}
+
+{% endblock content %}
