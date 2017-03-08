@@ -1,5 +1,4 @@
 alabaster==0.7.9
-appdirs==1.4.2
 Babel==2.3.4
 cffi==1.9.1
 cryptography==1.7.2
