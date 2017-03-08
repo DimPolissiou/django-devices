@@ -4,7 +4,7 @@ Babel==2.3.4
 cffi==1.9.1
 cryptography==1.7.2
 Django==1.10.6
--e git+https://github.com/DimPolissiou/django-actions#egg=django-actions
+https://github.com/DimPolissiou/django-actions/raw/master/django-actions-0.0.1-py2.py3-none-any.whl
 django-bootstrap-themes==3.3.6
 django-cas-ng==3.5.6
 django-collectd-rest==0.1.9.1
