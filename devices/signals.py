@@ -11,7 +11,7 @@ def cas_authentication_handler(sender, **kwargs):
 	else:
 		affiliation_field = "affiliation"
 	if (affiliation_field in kwargs["attributes"]) and kwargs["attributes"][affiliation_field]:
-		affiliation = kwargs["attributes"][affiliati0on_field]
+		affiliation = kwargs["attributes"][affiliation_field]
 	else:
 		print("********************Error in authentication signal, user has no affiliation********************")
 		return
