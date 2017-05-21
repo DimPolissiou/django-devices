@@ -3,6 +3,7 @@ from django.conf import settings
 from django.dispatch import receiver
 from django.contrib.auth import get_user_model
 from django.contrib.auth.models import Group
+from guardian.shortcuts import assign_perm
 
 @receiver(cas_user_authenticated)
 def cas_authentication_handler(sender, **kwargs):
@@ -23,6 +24,7 @@ def cas_authentication_handler(sender, **kwargs):
 		print("********************Error in authentication signal, user not found in database********************")
 		return
 	user.is_staff=True
+	assign_perm(user, django_netjsonconfig.add_template)
 	user.save()
 	group, created = Group.objects.get_or_create(name = affiliation)
 	user.groups.clear()
