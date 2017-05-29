@@ -1,4 +1,5 @@
 from django.db import models
+from django.contrib.auth.models import Group
 from django_netjsonconfig.models import Config
 #from django.contrib.gis.db import models as gismodels
 from djgeojson.fields import PointField, PolygonField
@@ -11,6 +12,7 @@ class Device(models.Model):
 				on_delete=models.PROTECT)
 				#unique=True,
 				#editable=False)
+	owner = models.ForeignKey(Group, editable=False)
 	manufacturer = models.CharField(_("Manufacturer"), max_length=256, blank=True)
 	model_name = models.CharField(_("Model name"), max_length=256, blank=True)
 	activation_date = models.DateField(auto_now_add=True)
