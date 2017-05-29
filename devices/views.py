@@ -38,11 +38,12 @@ class DeviceRegister(LoginRequiredMixin, CreateView):
 
 	def form_valid(self, form):
 		form.instance.config = Config.objects.get(id=form.cleaned_data['config_uuid'])
-		user_group = self.request.user.groups.all().first()
+		user_group = self.request.user.groups.first()
+		form.instance.owner = user_group
 		assign_perm('django_netjsonconfig.change_config', user_group, form.instance.config)
-		assign_perm('devices.change_device', user_group, form.instance)
+		#assign_perm('devices.change_device', user_group, form.instance)
 		assign_perm('django_netjsonconfig.delete_config', user_group, form.instance.config)
-		assign_perm('devices.delete_device', user_group, form.instance)
+		#assign_perm('devices.delete_device', user_group, form.instance)
 		return super(DeviceRegister, self).form_valid(form)
 
 	def get_success_url(self, *args, **kwargs):
