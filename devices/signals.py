@@ -1,9 +1,11 @@
+from django.db.models.signals import post_save
 from django_cas_ng.signals import cas_user_authenticated
 from django.conf import settings
 from django.dispatch import receiver
 from django.contrib.auth import get_user_model
 from django.contrib.auth.models import Group
 from guardian.shortcuts import assign_perm
+from .models import Device
 
 @receiver(cas_user_authenticated)
 def cas_authentication_handler(sender, **kwargs):
@@ -29,3 +31,9 @@ def cas_authentication_handler(sender, **kwargs):
 	group, created = Group.objects.get_or_create(name = affiliation)
 	user.groups.clear()
 	user.groups.add(group)
+
+@receiver(post_save, sender=Device)
+def device_post_save(sender, **kwargs):
+	device = kwargs["instance"]
+	assign_perm('devices.change_device', device.owner, device)
+	assign_perm('devices.delete_device', device.owner, device)
