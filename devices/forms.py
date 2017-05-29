@@ -34,7 +34,7 @@ class DeviceUpdateForm(ModelForm):
 
 	class Meta:
 		model = Device
-		exclude = ['config']
+		exclude = ['config', 'owner']
 		widgets = {'geom' : CustomizedLeafletWidget(), 'notes' : Textarea(attrs={'rows': 2, 'cols': 40})}
 
 class DeviceRegisterForm(DeviceUpdateForm):
@@ -58,4 +58,4 @@ class DeviceSearchForm(ModelForm):
 
 	class Meta:
 		model = Device
-		exclude = ['config', 'notes', 'is_indoor', 'geom']
+		exclude = ['config', 'notes', 'is_indoor', 'geom', 'owner']
