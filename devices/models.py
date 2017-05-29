@@ -5,14 +5,13 @@ from django_netjsonconfig.models import Config
 from djgeojson.fields import PointField, PolygonField
 from django.utils.translation import ugettext as _
 from collectd_rest.models import  GraphGroup
-from .signals import *
 
 class Device(models.Model):
 	config = models.ForeignKey(Config,
 				on_delete=models.PROTECT)
 				#unique=True,
 				#editable=False)
-	owner = models.ForeignKey(Group, editable=False)
+	owner = models.ForeignKey(Group, editable=False, null=True)
 	manufacturer = models.CharField(_("Manufacturer"), max_length=256, blank=True)
 	model_name = models.CharField(_("Model name"), max_length=256, blank=True)
 	activation_date = models.DateField(auto_now_add=True)
@@ -38,3 +37,5 @@ class GraphManager(models.Model):
 	memorygraphs = models.OneToOneField(GraphGroup, on_delete=models.CASCADE, related_name="memory_graphmanager")
 	interfacegraphs = models.OneToOneField(GraphGroup, on_delete=models.CASCADE, related_name="interface_graphmanager")
 	loadgraphs = models.OneToOneField(GraphGroup, on_delete=models.CASCADE, related_name="load_graphmanager")
+
+from .signals import *
