@@ -3,7 +3,7 @@ function makeTabs(group) {
         var title = group['title'];
         var graphs= group['graphs'];
 
-        var code = "<h2>"+title+"</h2>\n";
+        var code = "<h2>"+"</h2>\n";
         code += "<ul class=\"nav nav-tabs\">\n";
         graphs.map(function(g,i){
 		if (i === 0) {
