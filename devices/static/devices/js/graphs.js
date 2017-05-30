@@ -7,9 +7,9 @@ function makeTabs(group) {
         code += "<ul class=\"nav nav-tabs\">\n";
         graphs.map(function(g,i){
 		if (i === 0) {
-                	code += "<li class=\"active\"><a data-toggle=\"tab\"  href=\"#"+g['name']+"\>"+g['title']+"</a></li>\n";
+                	code += "<li class=\"active\"><a data-toggle=\"tab\"  href=\"#"+g['name']+"\"\>"+g['title']+"</a></li>\n";
 		} else {
-                	code += "<li><a data-toggle=\"tab\"  href=\"#"+g['name']+"\>"+g['title']+"</a></li>\n";
+                	code += "<li><a data-toggle=\"tab\"  href=\"#"+g['name']+"\"\>"+g['title']+"</a></li>\n";
 		}
         });
         code += "</ul>\n\n";
@@ -21,9 +21,13 @@ function renderGraph(graph) {
         var title = graph['title'];
         var url   = graph['url'];
 
+	var url = url.substring(0, url.length-1);
+	var url2 = url.concat("?format=png");
+
         var code = "<div id=\"" + name + "\" class=\"django-collectd-rest-graph\">\n";
         code += "<h3>" + title + "</h3>\n";
-        code += "<img src=" + url + " />\n";
+        code += "<img src=" + url2 + " height=\"360\" width=\"900\">\n";
+        //code += "<img src=" + url + " >\n";
         code += "</div>\n";
         return code;
 }
