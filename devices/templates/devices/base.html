@@ -40,7 +40,7 @@
                                     <span class="icon-bar"></span>
                                     <span class="icon-bar"></span>
                                 </button>
-                                <a class="navbar-brand" href="#">OpenWISP Monitor</a>
+                                <a class="navbar-brand" href="{% url 'devices_home' %}">OpenWISP Monitor</a>
                             </div>
                             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                                 {% if user.is_authenticated %}
@@ -51,13 +51,13 @@
                                         </a>
                                         <ul class="dropdown-menu" role="menu">
                                             <li>
-                                                <a href="{% url "devices_home" %}">Devices</a>
+                                                <a href="{% url 'devices_home' %}">Devices</a>
                                             </li>
                                             <li>
-                                                <a href="{% url "device_register" %}">Register a new device</a>
+                                                <a href="{% url 'device_register' %}">Register a new device</a>
                                             </li>
                                             <li>
-                                                <a href="{% url "device_search" %}">Search devices</a>
+                                                <a href="{% url 'device_search' %}">Search devices</a>
                                             </li>
                                             <li class="divider"></li>
                                             <li>
