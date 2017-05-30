@@ -5,14 +5,11 @@ function makeTabs(group) {
 
         var code = "<h2>"+title+"</h2>\n";
         code += "<ul class=\"nav nav-tabs\">\n";
-        //var code = "<ul class=\"tab\">\n";
         graphs.map(function(g,i){
 		if (i === 0) {
                 	code += "<li class=\"active\"><a data-toggle=\"tab\"  href=\"#"+g['name']+"\>"+g['title']+"</a></li>\n";
-                	//code += "<li><a href=\"javascript:void(0)\" class=\"tablinks\" onclick=\"openTab(event, \'"+g['name']+"\')\" id=\"defaultOpen\">"+g['title']+"</a></li>\n";
 		} else {
                 	code += "<li><a data-toggle=\"tab\"  href=\"#"+g['name']+"\>"+g['title']+"</a></li>\n";
-                	//code += "<li><a href=\"javascript:void(0)\" class=\"tablinks\" onclick=\"openTab(event, \'"+g['name']+"\')\">"+g['title']+"</a></li>\n";
 		}
         });
         code += "</ul>\n\n";
