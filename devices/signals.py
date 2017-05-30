@@ -6,6 +6,7 @@ from django.contrib.auth import get_user_model
 from django.contrib.auth.models import Group
 from guardian.shortcuts import assign_perm
 from .models import Device
+from django_netjsonconfig.models import Config
 
 @receiver(cas_user_authenticated)
 def cas_authentication_handler(sender, **kwargs):
@@ -37,3 +38,11 @@ def device_post_save(sender, **kwargs):
 	device = kwargs["instance"]
 	assign_perm('devices.change_device', device.owner, device)
 	assign_perm('devices.delete_device', device.owner, device)
+	
+
+@receiver(post_save, sender=Config)
+def config_creation(sender, **kwargs):
+	config, created = kwargs["instance"], kwargs["created"]
+	if created:
+		config.hostname = str(config.id)
+
