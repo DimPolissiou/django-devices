@@ -45,4 +45,5 @@ def config_creation(sender, **kwargs):
 	config, created = kwargs["instance"], kwargs["created"]
 	if created:
 		config.hostname = str(config.id)
+		config.save()
 
