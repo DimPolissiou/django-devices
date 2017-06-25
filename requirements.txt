@@ -7,7 +7,7 @@ django-bootstrap-themes==3.3.6
 django-cas-ng==3.5.6
 django-collectd-rest==0.1.9.1
 django-crispy-forms==1.6.1
-django-geojson==2.10.0
+django-geojson>=2.10.0
 django-guardian==1.4.6
 django-leaflet==0.19.0
 django-model-utils==2.6.1
