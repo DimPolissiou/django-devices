@@ -1,20 +1,15 @@
 from django.conf import settings
 from django.conf.urls import url
 from django.conf.urls.static import static
-#from django.contrib import admin
 from django.views.generic import TemplateView, UpdateView
-from djgeojson.views import GeoJSONLayerView #, TiledGeoJSONLayerView
+from djgeojson.views import GeoJSONLayerView
 
 from .models import Device
-#from .forms import DeviceForm
 from . import views
 
 urlpatterns = [
-    #url(r'^admin/', admin.site.urls),
     url(r'^$', views.IndexView.as_view(), name='devices_home'),
     url(r'^data.geojson/(?P<pk>\d+)$', views.DeviceGeomonitorView.as_view(model=Device, properties=('model_name, notes, id, config')), name='data'),
-    #url(r'^data.geojson$', GeoJSONLayerView.as_view(model=Device, properties=('model_name, notes, id')), name='data'),
-    #url(r'^data/(?P<z>\d+)/(?P<x>\d+)/(?P<y>\d+).geojson$', TiledGeoJSONLayerView.as_view(model=Device), name='data'),
 
     url(r'^device/(?P<pk>\d+)/update$', views.DeviceUpdate.as_view(), name='device_update'),
     url(r'^device/(?P<pk>\d+)/delete$', views.DeviceDelete.as_view(), name='device_delete'),

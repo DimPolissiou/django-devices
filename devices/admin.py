@@ -11,11 +11,8 @@ from rules.contrib.admin import ObjectPermissionsModelAdminMixin
 from django.core.urlresolvers import reverse
 from django.http import HttpResponseRedirect
 
-#admin.site.register(device_models.Device, LeafletGeoAdmin)
-#@admin.register(device_models.Device)
 class DeviceAdmin(LeafletGeoAdmin):
 	list_display = [field.name for field in device_models.Device._meta.fields if field.name != "id" and field.name != "geom"]
-	#fields = ('config', 'manufacturer', 'model_name', 'is_indoor', 'notes', 'geom')
 
 class GuardedConfigAdmin(GuardedModelAdminMixin, ObjectPermissionsModelAdminMixin, ConfigAdmin):
 

@@ -9,8 +9,6 @@ from collectd_rest.models import  GraphGroup
 class Device(models.Model):
 	config = models.ForeignKey(Config,
 				on_delete=models.PROTECT)
-				#unique=True,
-				#editable=False)
 	owner = models.ForeignKey(Group, editable=False, null=True)
 	manufacturer = models.CharField(_("Manufacturer"), max_length=256, blank=True)
 	model_name = models.CharField(_("Model name"), max_length=256, blank=True)

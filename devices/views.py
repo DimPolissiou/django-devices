@@ -5,7 +5,6 @@ from .forms import DeviceUpdateForm, DeviceRegisterForm, DeviceSearchForm
 from .models import Device, GraphManager
 from django.views.generic import TemplateView, ListView
 from django.views.generic.edit import FormView, UpdateView, CreateView, DeleteView
-#from django.forms.models import modelform_factory
 from leaflet.forms.widgets import LeafletWidget
 from django_netjsonconfig.models import Config, Template
 from rules.contrib.views import LoginRequiredMixin, PermissionRequiredMixin
@@ -23,8 +22,6 @@ class IndexView(LoginRequiredMixin, TemplateView):
 	template_name = 'devices/index.html'
 
 class DeviceGeomonitorView(PermissionListMixin, GeoJSONLayerView):
-	#class DeviceGeomonitorView(LoginRequiredMixin, PermissionListMixin, GeoJSONLayerView):
-	#login_url = '/login'
 	permission_required = 'devices.change_device'
 
 	def dispatch(self, request, *args, **kwargs):
@@ -41,9 +38,7 @@ class DeviceRegister(LoginRequiredMixin, CreateView):
 		user_group = self.request.user.groups.first()
 		form.instance.owner = user_group
 		assign_perm('django_netjsonconfig.change_config', user_group, form.instance.config)
-		#assign_perm('devices.change_device', user_group, form.instance)
 		assign_perm('django_netjsonconfig.delete_config', user_group, form.instance.config)
-		#assign_perm('devices.delete_device', user_group, form.instance)
 		return super(DeviceRegister, self).form_valid(form)
 
 	def get_success_url(self, *args, **kwargs):
@@ -53,7 +48,6 @@ class DeviceUpdate(PermissionRequiredMixin, UpdateView):
 	model = Device
 	form_class = DeviceUpdateForm
 	template_name_suffix = '_update_form'
-	#success_url = '/devices'
 	permission_required = 'devices.change_device'
 
 	def form_valid(self, form):
@@ -68,9 +62,7 @@ class DeviceUpdate(PermissionRequiredMixin, UpdateView):
 class DeviceDelete(PermissionRequiredMixin, UpdateView):
 	model = Device
 	fields = []
-	#form_class = DeviceDeleteForm
 	template_name_suffix = '_delete_form'
-	#success_url = '/devices'
 	permission_required = 'devices.delete_device'
 
 	def get_success_url(self, *args, **kwargs):
