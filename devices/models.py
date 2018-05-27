@@ -1,7 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import Group
 from django_netjsonconfig.models import Config
-#from django.contrib.gis.db import models as gismodels
 from djgeojson.fields import PointField, PolygonField
 from django.utils.translation import ugettext as _
 from collectd_rest.models import  GraphGroup
